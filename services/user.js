@@ -8,8 +8,37 @@ const createUser = async (username, password, displayName, profilePicture) => {
   return await user.save();
 };
 
+const getUsers = async () => {
+  return await User.find({});
+};
+
+const updateUser = async (id, username, password, displayName, profilePicture) => {
+  const user = await getUserById(id);
+  if (!user) {
+    return null;
+  }
+    user.username = username;
+    user.password = password;
+    user.displayName = displayName;
+    user.profilePicture = profilePicture;
+    await user.save();
+    return user;
+}
+
+const deleteUser = async (id) => {
+  const user = await getUserById(id);
+  if (!user) {
+    return null;
+  }
+  await user.deleteOne();
+  return user;
+}
+
+const getUserById = async (id) => {
+  return await User.findById(id); 
+}
 
 
 module.exports = {
-  createUser,
+  createUser, getUsers , updateUser, deleteUser , getUserById, updateUser, deleteUser
 };

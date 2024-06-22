@@ -9,12 +9,24 @@
 </head>
 
 <body>
+    <button onclick="createUser()">Add User</button><br>
+    <button onclick="getAll()">get all users</button><br>
+    <input><button onclick="getOne()">Get One User</button><br>
     <input id="username" placeholder="Enter username" required><br>
     <input id="password" type="password" placeholder="Enter password" required><br>
     <input id="displayName" placeholder="Enter display name" required><br>
-    <button onclick="createUser()">Add User</button><br>
+    <button onclick="updateUser()">Update User</button><br>
+    <button onclick="deleteUser()">Delete User</button><br>
 
     <script>
+        async function getOne() {
+            const user = await fetch(`http://localhost:5000/api/users/` + document.getElementsByTagName('input')[0].value).then(data => data.json())
+            console.log(user)
+        }
+        async function getAll() {
+            const users = await fetch('http://localhost:5000/api/users').then(data => data.json())
+            console.log(users)
+        }
         async function createUser() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -28,6 +40,25 @@
                 body: JSON.stringify({ username, password, displayName })
             })
             const user = await data.json()
+            console.log(user)
+        }
+
+        async function updateUser() {
+            const user = await fetch(`http://localhost:5000/api/users/` + document.getElementsByTagName('input')[0].value,  {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username: document.getElementsByTagName('input')[1].value, password: document.getElementsByTagName('input')[2].value,
+                displayName: document.getElementsByTagName('input')[3].value })
+            }).then(data => data.json())
+            console.log(user)
+        }
+
+        async function deleteUser() {
+            const user = await fetch(`http://localhost:5000/api/users/` + document.getElementsByTagName('input')[0].value,  {
+                method: "DELETE",
+            }).then(data => data.json())
             console.log(user)
         }
     </script>
