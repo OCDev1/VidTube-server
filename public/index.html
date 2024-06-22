@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="commentText" placeholder="Enter comment"><br>
+    <input id="username" placeholder="Enter username"><br>
+    <input id="img" placeholder="Enter image URL"><br>
+    <button onclick="create()">Add</button><br>
+    <button onclick="getAll()">Get all comments</button><br>
+    <input><button onclick="get()">get one</button>
+    <button onclick="update()">Update</button><br>
+    <button onclick="del()">Delete</button><br>
+
+
+
+    <script>
+        async function getAll() {
+            const comments = await fetch('http://localhost:12345/comments').then(data => data.json());
+            console.log(comments);
+        }
+        async function create() {
+            const text = document.getElementById('commentText').value;
+            const username = document.getElementById('username').value;
+            const img = document.getElementById('img').value;
+            const date = new Date().toISOString();
+
+            const data = await fetch('http://localhost:12345/comments', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/Json",
+                },
+                body: JSON.stringify({ text, username, date, img})
+            })
+            comments = await data.json()
+            console.log(comments)
+        }
+
+        async function get() {
+            const comment = await fetch('http://localhost:12345/comments/' + document.getElementsByTagName('input')[3].value).then(data => data.json());
+            console.log(comment)
+        }
+
+        async function update() {
+            const comments = await fetch('http://localhost:12345/comments/' + document.getElementsByTagName('input')[3].value , {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/Json",
+                },
+                body: JSON.stringify({ text: document.getElementsByTagName('input')[0].value, username, img})
+            })
+            .then(comments => comments.json());
+            console.log(comments)
+        }
+        
+        async function del() {
+            const comments = await fetch('http://localhost:12345/comments/' + document.getElementsByTagName('input')[3].value , {
+                method: "DELETE"
+            }).then(comments => comments.json());
+            console.log(comments)
+        }
+
+    </script>
+</body>
+
+</html>
