@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="title" placeholder="Title">
+    <input id="description" placeholder="Description">
+    <input id="author" placeholder="Author">
+    <input id="img" placeholder="Image URL">
+    <input id="video" placeholder="Video URL">
+    <input id="authorImage" placeholder="Author Image URL">
+    <button onclick="create()">Add</button>
+    <button onclick="getAll()">Get all articles</button>
+    <input><button onclick="getOne()">Get one article</button></input>
+    <button onclick="update()">Update</button>
+    <button onclick="del()">Delete</button>
+    <br>
+    <script>
+        async function getAll() {
+            const videos = await fetch('http://localhost:12345/videos').then(data => data.json());
+            console.log(videos);
+        }
+        async function getOne() {
+            const videos = await fetch('http://localhost:12345/videos/' + document.getElementsByTagName('input')[6].value).then(data => data.json());
+            console.log(videos);
+        }
+        async function create() {
+            const data = await fetch('http://localhost:12345/videos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: document.getElementById('title').value,
+                    description: document.getElementById('description').value,
+                    author: document.getElementById('author').value,
+                    img: document.getElementById('img').value,
+                    video: document.getElementById('video').value,
+                    authorImage: document.getElementById('authorImage').value
+                })
+            });
+            const videos = await data.json();
+            console.log(videos);
+        }
+
+        async function update() {
+            const data = await fetch('http://localhost:12345/videos/' + document.getElementsByTagName('input')[6].value, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: document.getElementsByTagName('input')[0].value,
+                    description: document.getElementsByTagName('input')[1].value,
+                    img: document.getElementsByTagName('input')[3].value,
+                    video: document.getElementsByTagName('input')[4].value
+                })
+            });
+            const videos = await data.json();
+            console.log(videos);
+        }
+
+        async function del() {
+            const data = await fetch('http://localhost:12345/videos/' + document.getElementsByTagName('input')[6].value, {
+                method: 'DELETE'
+            });
+            const videos = await data.json();
+            console.log(videos);
+        }
+    </script>
+</body>
+</html>
