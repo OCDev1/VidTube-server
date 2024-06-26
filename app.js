@@ -22,7 +22,7 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 app.use(express.static('public'));
 
 const videos = require('./routes/video');
-app.use('/videos', videos);
+app.use('/api', videos);
 
 
 app.listen(process.env.PORT);
