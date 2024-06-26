@@ -7,7 +7,7 @@ router.route('/videos')
     .get(videoController.getVideos);
 
 router.route('/users/:id/videos')
-    .get(videoController.getVideos)
+    .get(videoController.getVideosByAuthor)
     .post(videoController.createVideo);
 
 

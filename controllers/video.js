@@ -18,6 +18,14 @@ const getVideo = async (req, res) => {
     res.json(video);
 };
 
+const getVideosByAuthor = async (req, res) => {
+    const videos = await videoService.getVideosByAuthor(req.params.author);
+    if (!videos) {
+        return res.status(404).json({ errors: ['The videos could not be found.'] });
+    }
+    res.json(videos);
+};
+
 const updateVideo = async (req, res) => {
     const video = await videoService.updateVideo(req.params.id, req.body.title, req.body.description, req.body.img, req.body.video);
     if (!video) {
@@ -34,4 +42,4 @@ const deleteVideo = async (req, res) => {
     res.json(video);
 };
 
-module.exports = { createVideo, getVideos, getVideo, updateVideo, deleteVideo};
+module.exports = { createVideo, getVideos, getVideo, updateVideo, deleteVideo, getVideosByAuthor };

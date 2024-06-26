@@ -23,6 +23,10 @@ const getVideoById = async (id) => {
   return await Video.findById(id);
 };
 
+const getVideosByAuthor = async (author) => {
+  return await Video.find({ author: author });
+}
+
 const updateVideo = async (id, title, description, img, video) => {
   const cur_video = await getVideoById(id);
   if (!cur_video) {
@@ -45,4 +49,4 @@ const deleteVideo = async (id) => {
   return video;
 }
 
-module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo};
+module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor };
