@@ -1,7 +1,7 @@
 const userService = require('../services/user');
 
 const createUser = async (req, res) => {
-  res.json(await userService.createUser(req.body.username, req.body.password, req.body.displayName));
+  res.json(await userService.createUser(req.body.username, req.body.password, req.body.displayName, req.body.profilePicture));
 };
 
 const getUsers = async (req, res) => {
@@ -15,6 +15,14 @@ const getUser = async (req, res) => {
     }
     res.json(user);
 }
+
+const signInUser = async (req, res) => {
+  const user = await userService.findUserByUsernameAndPassword(req.body.username, req.body.password);
+  if (!user) {
+      return res.status(401).json({ errors :['Invalid username or password']});
+  }
+  res.json(user);
+};
 
 const updateUser = async (req, res) => {
     const user = await userService.updateUser(req.params.id, req.body.username, req.body.password, req.body.displayName, req.body.profilePicture);
@@ -33,5 +41,5 @@ const deleteUser = async (req, res) => {
 }
 
 module.exports = {
-  createUser, getUsers, getUser, updateUser, deleteUser
+  createUser, getUsers, getUser, updateUser, deleteUser, signInUser
 };

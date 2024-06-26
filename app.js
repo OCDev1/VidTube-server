@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 var app = express();
 
 const bodyParser = require('body-parser');
@@ -19,9 +20,18 @@ mongoose.connect(process.env.CONNECTION_STRING, {
     useUnifiedTopology: true
 });
 
-app.use(express.static('public'));
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'public')));
 
 const userRoutes = require('./routes/user');
 app.use('/api/users', userRoutes);
 
-app.listen(process.env.PORT);
+// The "catchall" handler: for any request that doesn't match an API route,
+// send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});

@@ -38,7 +38,11 @@ const getUserById = async (id) => {
   return await User.findById(id); 
 }
 
+const findUserByUsernameAndPassword = async (username, password) => {
+  return await User.findOne({ username, password });
+};
+
 
 module.exports = {
-  createUser, getUsers , updateUser, deleteUser , getUserById, updateUser, deleteUser
+  createUser, getUsers , updateUser, deleteUser , getUserById, updateUser, deleteUser, findUserByUsernameAndPassword
 };
