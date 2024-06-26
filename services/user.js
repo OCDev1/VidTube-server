@@ -44,5 +44,5 @@ const findUserByUsernameAndPassword = async (username, password) => {
 
 
 module.exports = {
-  createUser, getUsers , updateUser, deleteUser , getUserById, updateUser, deleteUser, findUserByUsernameAndPassword
+  createUser, getUsers , updateUser, deleteUser , getUserById, findUserByUsernameAndPassword
 };
