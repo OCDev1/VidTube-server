@@ -27,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const userRoutes = require('./routes/user');
 app.use('/api', userRoutes);
+const videos = require('./routes/video');
+app.use('/api', videos);
 
 // The "catchall" handler: for any request that doesn't match an API route,
 // send back React's index.html file.
