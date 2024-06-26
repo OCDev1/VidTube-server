@@ -19,6 +19,10 @@ const Comment = new Schema({
     img: {
         type: String,
         required: true
+    },
+    videoId: { 
+        type: String,
+         required: true 
     }
 });
 
