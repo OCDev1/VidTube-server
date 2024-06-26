@@ -25,6 +25,7 @@ app.use(cors());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'public')));
 
+// routes
 const userRoutes = require('./routes/user');
 app.use('/api', userRoutes);
 const videos = require('./routes/video');
