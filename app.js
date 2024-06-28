@@ -1,45 +1,42 @@
 const express = require('express');
 const path = require('path');
-const app = express();
+var app = express();
+
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const customEnv = require('custom-env');
 const mongoose = require('mongoose');
-const cors = require('cors');
 
-// Load environment variables
 customEnv.env(process.env.NODE_ENV, './config');
+console.log(process.env.CONNECTION_STRING);
+console.log(process.env.PORT);
 
-// Middleware setup
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
-app.use(express.static('public'));
-
-// Connect to MongoDB
 mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
-// Logging middleware -- FOR DEBUG
-app.use((req, res, next) => {
-  console.log(`Incoming Request: ${req.method} ${req.url}`);
-  console.log('Request Body:', req.body);
-  next();
-});
+// Increase the payload size limit
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json({ limit: '10mb' }));
 
-// Route setup
-const commentsRouter = require('./routes/comment');
-app.use('/api', commentsRouter);
+app.use(cors());
 
-// Serve index.html for all other routes
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'public')));
+
+// routes
+const userRoutes = require('./routes/user');
+app.use('/api', userRoutes);
+const videos = require('./routes/video');
+app.use('/api', videos);
+
+// The "catchall" handler: for any request that doesn't match an API route,
+// send back React's index.html file.
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start the server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
