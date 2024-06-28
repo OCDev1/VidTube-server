@@ -7,10 +7,10 @@ router.route('/comments')
     .get(commentController.getComments)
     .post(commentController.createComment);
 
-router.route('/users/:id')
+router.route('/comments/:id')
+    .get(commentController.getComment)
 
 router.route('/users/:id/comments')
-    .get(commentController.getComment)
     .patch(commentController.updateComment)
     .delete(commentController.deleteComment)
 
