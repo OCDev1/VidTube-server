@@ -5,6 +5,15 @@ const createComment = async (req, res) => {
   res.json(await commentService.createComment(req.body.text, req.body.username, req.body.date, req.body.img, req.body.videoId));
 };
 
+const updateComment = async (req, res) => {
+    const comment = await commentService.updateComment(req.body.id, req.body.text);
+    console.log('Request Body:', req.body);
+    if (!comment) {
+      return res.status(404).json({ errors: ['Comment not found'] });
+    }
+    res.json(comment);
+  };
+
 const getComments = async (req, res) => {
   res.json(await commentService.getComments());
 };
@@ -30,12 +39,6 @@ const deleteComment = async (req, res) => {
   res.json(comment);
 };
 
-const updateComment = async (req, res) => {
-  const comment = await commentService.updateComment(req.params.id, req.body.text);
-  if (!comment) {
-    return res.status(404).json({ errors: ['Comment not found'] });
-  }
-  res.json(comment);
-};
+
 
 module.exports = { createComment, getComments, updateComment, getComment, deleteComment, getCommentsByVideoId };

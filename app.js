@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(bodyParser.json({ limit: '10mb' }));
 
 app.use(cors());
+app.use(express.static('public'));
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,6 +31,9 @@ const userRoutes = require('./routes/user');
 app.use('/api', userRoutes);
 const videos = require('./routes/video');
 app.use('/api', videos);
+const commentsRouter = require('./routes/comment');
+app.use('/api', commentsRouter);
+
 
 // The "catchall" handler: for any request that doesn't match an API route,
 // send back React's index.html file.
