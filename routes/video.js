@@ -6,6 +6,9 @@ const router = express.Router();
 router.route('/videos')
     .get(videoController.getVideos);
 
+router.route('/videos/:id')
+    .get(videoController.getVideo);
+
 router.route('/users/:id/videos')
     .get(videoController.getVideosByAuthor)
     .post(videoController.createVideo);
