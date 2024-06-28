@@ -22,7 +22,7 @@ mongoose.connect(process.env.CONNECTION_STRING, {
   useUnifiedTopology: true
 });
 
-// Logging middleware
+// Logging middleware -- FOR DEBUG
 app.use((req, res, next) => {
   console.log(`Incoming Request: ${req.method} ${req.url}`);
   console.log('Request Body:', req.body);
