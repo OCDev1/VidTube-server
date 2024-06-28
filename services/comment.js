@@ -40,4 +40,72 @@ const deleteComment = async (id) => {
   return comment;
 };
 
-module.exports = { createComment, getComments, getCommentById, updateComment, deleteComment, getCommentsByVideoId };
+async function likeComment(commentId, userDisplayName) {
+    try {
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        throw new Error('Comment not found');
+      }
+  
+      if (!comment.likes.includes(userDisplayName)) {
+        comment.likes.push(userDisplayName);
+      }
+  
+      await comment.save();
+      return comment;
+    } catch (error) {
+      throw new Error('Failed to like comment: ' + error.message);
+    }
+  }
+  
+  async function unlikeComment(commentId, userDisplayName) {
+    try {
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        throw new Error('Comment not found');
+      }
+  
+      comment.likes = comment.likes.filter(name => name !== userDisplayName);
+  
+      await comment.save();
+      return comment;
+    } catch (error) {
+      throw new Error('Failed to unlike comment: ' + error.message);
+    }
+  }
+
+  async function dislikeComment(commentId, userDisplayName) {
+    try {
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        throw new Error('Comment not found');
+      }
+  
+      if (!comment.dislikes.includes(userDisplayName)) {
+        comment.dislikes.push(userDisplayName);
+      }
+  
+      await comment.save();
+      return comment;
+    } catch (error) {
+      throw new Error('Failed to like comment: ' + error.message);
+    }
+  }
+  
+  async function undislikeComment(commentId, userDisplayName) {
+    try {
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        throw new Error('Comment not found');
+      }
+  
+      comment.dislikes = comment.dislikes.filter(name => name !== userDisplayName);
+  
+      await comment.save();
+      return comment;
+    } catch (error) {
+      throw new Error('Failed to unlike comment: ' + error.message);
+    }
+  }
+
+module.exports = { createComment, getComments, getCommentById, updateComment, deleteComment, getCommentsByVideoId,  likeComment, unlikeComment,dislikeComment ,undislikeComment };

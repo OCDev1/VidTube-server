@@ -14,7 +14,10 @@ router.route('/users/:id/comments')
     .patch(commentController.updateComment)
     .delete(commentController.deleteComment)
 
-router.route('/users/:id/comments/:pid')
-    .get(commentController.getCommentsByVideoId);
+router.route('/:id/like')
+    .patch(commentController.likeComment);
+
+router.route('/:id/dislike')
+    .patch(commentController.dislikeComment);
 
 module.exports = router;

@@ -20,10 +20,12 @@ const Comment = new Schema({
         type: String,
         required: true
     },
-    videoId: { 
+    videoId: {
         type: String,
-         required: true 
-    }
+        required: true
+    },
+    likes: [{ type: String }], // Array to store display names of users who liked the comment
+    dislikes: [{ type: String }],
 });
 
 module.exports = mongoose.model('Comment', Comment)

@@ -39,6 +39,48 @@ const deleteComment = async (req, res) => {
   res.json(comment);
 };
 
+async function likeComment(req, res) {
+    const { id } = req.params;
+    const { userDisplayName } = req.body;
+    try {
+      const comment = await commentService.likeComment(id, userDisplayName);
+      res.status(200).json(comment);
+    } catch (error) {
+      res.status(500).send('Error liking comment: ' + error.message);
+    }
+  }
+  
+  async function unlikeComment(req, res) {
+    const { id } = req.params;
+    const { userDisplayName } = req.body;
+    try {
+      const comment = await commentService.unlikeComment(id, userDisplayName);
+      res.status(200).json(comment);
+    } catch (error) {
+      res.status(500).send('Error unliking comment: ' + error.message);
+    }
+  }
 
+  async function dislikeComment(req, res) {
+    const { id } = req.params;
+    const { userDisplayName } = req.body;
+    try {
+      const comment = await commentService.likeComment(id, userDisplayName);
+      res.status(200).json(comment);
+    } catch (error) {
+      res.status(500).send('Error liking comment: ' + error.message);
+    }
+  }
+  
+  async function undislikeComment(req, res) {
+    const { id } = req.params;
+    const { userDisplayName } = req.body;
+    try {
+      const comment = await commentService.unlikeComment(id, userDisplayName);
+      res.status(200).json(comment);
+    } catch (error) {
+      res.status(500).send('Error unliking comment: ' + error.message);
+    }
+  }
 
-module.exports = { createComment, getComments, updateComment, getComment, deleteComment, getCommentsByVideoId };
+module.exports = { createComment, getComments, updateComment, getComment, deleteComment, getCommentsByVideoId,  likeComment, unlikeComment, dislikeComment ,undislikeComment };
