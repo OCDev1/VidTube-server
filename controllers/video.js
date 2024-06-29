@@ -27,7 +27,7 @@ const getVideosByAuthor = async (req, res) => {
 };
 
 const updateVideo = async (req, res) => {
-    const video = await videoService.updateVideo(req.params.id, req.body.title, req.body.description, req.body.img, req.body.video);
+    const video = await videoService.updateVideo(req.params.pid, req.body.title, req.body.description, req.body.img, req.body.video);
     if (!video) {
         return res.status(404).json({ errors: ['The video could not be found.'] });
     }
@@ -35,7 +35,7 @@ const updateVideo = async (req, res) => {
 };
 
 const deleteVideo = async (req, res) => {
-    const video = await videoService.deleteVideo(req.params.id);
+    const video = await videoService.deleteVideo(req.params.pid);
     if (!video) {
         return res.status(404).json({ errors: ['The video could not be found.'] })
     }
