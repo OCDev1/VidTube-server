@@ -1,10 +1,11 @@
 const Video = require('../models/video');
 
-const createVideo = async (title, description, author, img, video, authorImage, uploadTime) => {
+const createVideo = async (title, description, author, username, img, video, authorImage, uploadTime) => {
   const cur_video = new Video({
     title: title,
     description: description,
     author: author,
+    username: username,
     img: img,
     video: video,
     authorImage: authorImage
@@ -23,8 +24,12 @@ const getVideoById = async (id) => {
   return await Video.findById(id);
 };
 
-const getVideosByAuthor = async (author) => {
-  return await Video.find({ author: author });
+const getUserVideoById = async (pid) => {
+  return await Video.findById(pid);
+};
+
+const getVideosByAuthor = async (id) => {
+  return await Video.find({ username: id });
 }
 
 const updateVideo = async (id, title, description, img, video) => {
@@ -49,4 +54,4 @@ const deleteVideo = async (id) => {
   return video;
 }
 
-module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor };
+module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor, getUserVideoById };

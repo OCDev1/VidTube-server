@@ -15,7 +15,7 @@ router.route('/users/:id/videos')
 
 
 router.route('/users/:id/videos/:pid')
-    .get(videoController.getVideo)
+    .get(videoController.getUserVideoById)
     .patch(videoController.updateVideo)
     .delete(videoController.deleteVideo);
 
