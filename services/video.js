@@ -1,6 +1,6 @@
 const Video = require('../models/video');
 
-const createVideo = async (title, description, author, username, img, video, authorImage, uploadTime) => {
+const createVideo = async (title, description, author, username, img, video, authorImage, uploadTime, views) => {
   const cur_video = new Video({
     title: title,
     description: description,
@@ -12,6 +12,9 @@ const createVideo = async (title, description, author, username, img, video, aut
   });
   if (uploadTime) { 
     cur_video.uploadTime = uploadTime;
+  }
+  if (views) {
+    cur_video.views = views;
   }
   return await cur_video.save();
 };
