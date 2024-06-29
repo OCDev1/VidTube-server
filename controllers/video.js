@@ -42,4 +42,29 @@ const deleteVideo = async (req, res) => {
     res.json(video);
 };
 
-module.exports = { createVideo, getVideos, getVideo, updateVideo, deleteVideo, getVideosByAuthor };
+// Likes on videos
+async function likeVideo(req, res) {
+    const { id } = req.params;
+    const { userDisplayName } = req.body;
+  
+    try {
+      const updatedVideo = await videoService.likeVideo(id, userDisplayName);
+      res.status(200).json(updatedVideo);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+  
+  async function dislikeVideo(req, res) {
+    const { id } = req.params;
+    const { userDisplayName } = req.body;
+  
+    try {
+      const updatedVideo = await videoService.dislikeVideo(id, userDisplayName);
+      res.status(200).json(updatedVideo);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+module.exports = { createVideo, getVideos, getVideo, updateVideo, deleteVideo, getVideosByAuthor, likeVideo ,dislikeVideo };

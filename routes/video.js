@@ -19,4 +19,10 @@ router.route('/users/:id/videos/:pid')
     .patch(videoController.updateVideo)
     .delete(videoController.deleteVideo);
 
+router.route('/videos/:id/like')
+    .patch(videoController.likeVideo);
+
+router.route('/videos/:id/dislike')
+    .patch(videoController.dislikeVideo);
+
 module.exports = router;

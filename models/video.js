@@ -33,7 +33,9 @@ const Video = new Schema({
     authorImage: {
       type: String,
       required: true
-    }
+    },
+    likes: [{ type: String }], // Array to store display names of users who liked the video
+    dislikes: [{ type: String }],
   });
 
 

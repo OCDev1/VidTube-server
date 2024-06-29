@@ -49,4 +49,55 @@ const deleteVideo = async (id) => {
   return video;
 }
 
-module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor };
+
+// likes on Videos
+async function likeVideo(videoId, userDisplayName) {
+  try {
+    const video = await Video.findById(videoId);
+    if (!video) throw new Error('Video not found');
+
+    // Check if user is already in likes array
+    if (video.likes.includes(userDisplayName)) {
+      // Remove user from likes array
+      video.likes = video.likes.filter(name => name !== userDisplayName);
+    } else {
+      // Add user to likes array
+      video.likes.push(userDisplayName);
+    }
+
+    // Ensure user is removed from dislikes array
+    video.dislikes = video.dislikes.filter(name => name !== userDisplayName);
+
+    await video.save();
+    return video;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+async function dislikeVideo(videoId, userDisplayName) {
+  try {
+    const video = await Video.findById(videoId);
+    if (!video) throw new Error('Video not found');
+
+    // Check if user is already in dislikes array
+    if (video.dislikes.includes(userDisplayName)) {
+      // Remove user from dislikes array
+      video.dislikes = video.dislikes.filter(name => name !== userDisplayName);
+    } else {
+      // Add user to dislikes array
+      video.dislikes.push(userDisplayName);
+    }
+
+    // Ensure user is removed from likes array
+    video.likes = video.likes.filter(name => name !== userDisplayName);
+
+    await video.save();
+    return video;
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor, likeVideo, dislikeVideo };
