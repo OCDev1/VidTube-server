@@ -1,13 +1,11 @@
 const commentService = require('../services/comment');
 
 const createComment = async (req, res) => {
-  console.log('Request Body:', req.body);
   res.json(await commentService.createComment(req.body.text, req.body.username, req.body.date, req.body.img, req.body.videoId));
 };
 
 const updateComment = async (req, res) => {
     const comment = await commentService.updateComment(req.body.id, req.body.text);
-    console.log('Request Body:', req.body);
     if (!comment) {
       return res.status(404).json({ errors: ['Comment not found'] });
     }
@@ -42,45 +40,25 @@ const deleteComment = async (req, res) => {
 async function likeComment(req, res) {
     const { id } = req.params;
     const { userDisplayName } = req.body;
+  
     try {
-      const comment = await commentService.likeComment(id, userDisplayName);
-      res.status(200).json(comment);
+      const updatedComment = await commentService.likeComment(id, userDisplayName);
+      res.status(200).json(updatedComment);
     } catch (error) {
-      res.status(500).send('Error liking comment: ' + error.message);
+      res.status(500).json({ error: error.message });
     }
   }
   
-  async function unlikeComment(req, res) {
-    const { id } = req.params;
-    const { userDisplayName } = req.body;
-    try {
-      const comment = await commentService.unlikeComment(id, userDisplayName);
-      res.status(200).json(comment);
-    } catch (error) {
-      res.status(500).send('Error unliking comment: ' + error.message);
-    }
-  }
-
   async function dislikeComment(req, res) {
     const { id } = req.params;
     const { userDisplayName } = req.body;
-    try {
-      const comment = await commentService.likeComment(id, userDisplayName);
-      res.status(200).json(comment);
-    } catch (error) {
-      res.status(500).send('Error liking comment: ' + error.message);
-    }
-  }
   
-  async function undislikeComment(req, res) {
-    const { id } = req.params;
-    const { userDisplayName } = req.body;
     try {
-      const comment = await commentService.unlikeComment(id, userDisplayName);
-      res.status(200).json(comment);
+      const updatedComment = await commentService.dislikeComment(id, userDisplayName);
+      res.status(200).json(updatedComment);
     } catch (error) {
-      res.status(500).send('Error unliking comment: ' + error.message);
+      res.status(500).json({ error: error.message });
     }
   }
 
-module.exports = { createComment, getComments, updateComment, getComment, deleteComment, getCommentsByVideoId,  likeComment, unlikeComment, dislikeComment ,undislikeComment };
+module.exports = { createComment, getComments, updateComment, getComment, deleteComment, getCommentsByVideoId,  likeComment, dislikeComment };

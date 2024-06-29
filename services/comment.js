@@ -6,7 +6,6 @@ const createComment = async (text, username, date, img, videoId) => {
       const savedComment = await comment.save();
       return savedComment; // Return the saved comment object
     } catch (error) {
-        console.log('Request Body:', text, username, date, img, videoId);
       throw new Error(error.message); // Handle any errors that occur during saving
     }
   };
@@ -40,72 +39,56 @@ const deleteComment = async (id) => {
   return comment;
 };
 
+// likes on comments
 async function likeComment(commentId, userDisplayName) {
     try {
       const comment = await Comment.findById(commentId);
-      if (!comment) {
-        throw new Error('Comment not found');
-      }
+      if (!comment) throw new Error('Comment not found');
   
-      if (!comment.likes.includes(userDisplayName)) {
+      // Check if user is already in likes array
+      if (comment.likes.includes(userDisplayName)) {
+        // Remove user from likes array
+        comment.likes = comment.likes.filter(name => name !== userDisplayName);
+      } else {
+        // Add user to likes array
         comment.likes.push(userDisplayName);
       }
   
-      await comment.save();
-      return comment;
-    } catch (error) {
-      throw new Error('Failed to like comment: ' + error.message);
-    }
-  }
-  
-  async function unlikeComment(commentId, userDisplayName) {
-    try {
-      const comment = await Comment.findById(commentId);
-      if (!comment) {
-        throw new Error('Comment not found');
-      }
-  
-      comment.likes = comment.likes.filter(name => name !== userDisplayName);
-  
-      await comment.save();
-      return comment;
-    } catch (error) {
-      throw new Error('Failed to unlike comment: ' + error.message);
-    }
-  }
-
-  async function dislikeComment(commentId, userDisplayName) {
-    try {
-      const comment = await Comment.findById(commentId);
-      if (!comment) {
-        throw new Error('Comment not found');
-      }
-  
-      if (!comment.dislikes.includes(userDisplayName)) {
-        comment.dislikes.push(userDisplayName);
-      }
-  
-      await comment.save();
-      return comment;
-    } catch (error) {
-      throw new Error('Failed to like comment: ' + error.message);
-    }
-  }
-  
-  async function undislikeComment(commentId, userDisplayName) {
-    try {
-      const comment = await Comment.findById(commentId);
-      if (!comment) {
-        throw new Error('Comment not found');
-      }
-  
+      // Ensure user is removed from dislikes array
       comment.dislikes = comment.dislikes.filter(name => name !== userDisplayName);
   
       await comment.save();
       return comment;
     } catch (error) {
-      throw new Error('Failed to unlike comment: ' + error.message);
+      throw error;
     }
   }
+  
+  
+  async function dislikeComment(commentId, userDisplayName) {
+    try {
+      const comment = await Comment.findById(commentId);
+      if (!comment) throw new Error('Comment not found');
+  
+      // Check if user is already in dislikes array
+      if (comment.dislikes.includes(userDisplayName)) {
+        // Remove user from dislikes array
+        comment.dislikes = comment.dislikes.filter(name => name !== userDisplayName);
+      } else {
+        // Add user to dislikes array
+        comment.dislikes.push(userDisplayName);
+      }
+  
+      // Ensure user is removed from likes array
+      comment.likes = comment.likes.filter(name => name !== userDisplayName);
+  
+      await comment.save();
+      return comment;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  
 
-module.exports = { createComment, getComments, getCommentById, updateComment, deleteComment, getCommentsByVideoId,  likeComment, unlikeComment,dislikeComment ,undislikeComment };
+module.exports = { createComment, getComments, getCommentById, updateComment, deleteComment, getCommentsByVideoId,  likeComment, dislikeComment };
