@@ -13,14 +13,6 @@ const getUsers = async (req, res) => {
   res.json(await userService.getUsers());
 };
 
-const getUser = async (req, res) => {
-  const user = await userService.getUserById(req.params.id);
-  if (!user) {
-    return res.status(404).json({ errors: ['User not found'] });
-  }
-  res.json(user);
-};
-
 const signInUser = async (req, res) => {
   const user = await userService.findUserByUsernameAndPassword(req.body.username, req.body.password);
   if (!user) {
@@ -30,21 +22,37 @@ const signInUser = async (req, res) => {
   res.json({ user, token });
 };
 
-const updateUser = async (req, res) => {
-  const user = await userService.updateUser(req.params.id, req.body.username, req.body.password, req.body.displayName, req.body.profilePicture);
+const getUser = async (req, res) => {
+  const user = await userService.findUserByUsername(req.params.username);
   if (!user) {
     return res.status(404).json({ errors: ['User not found'] });
   }
   res.json(user);
 };
 
+const updateUser = async (req, res) => {
+  const result = await userService.updateUser(req.params.username, req.body.username, req.body.password, req.body.displayName, req.body.profilePicture);
+  
+  if (result.error) {
+    return res.status(400).json({ errors: [result.error] });
+  }
+
+  if (!result) {
+    return res.status(404).json({ errors: ['User not found'] });
+  }
+
+  res.json(result);
+};
+
+
 const deleteUser = async (req, res) => {
-  const user = await userService.deleteUser(req.params.id);
+  const user = await userService.deleteUser(req.params.username);
   if (!user) {
     return res.status(404).json({ errors: ['User not found'] });
   }
   res.json(user);
 };
+
 
 module.exports = {
   createUser, getUsers, getUser, updateUser, deleteUser, signInUser

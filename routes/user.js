@@ -10,9 +10,10 @@ router.route('/users')
 router.route('/users/signin')
   .post(userController.signInUser);
 
-router.route('/users/:id')
+  router.route('/users/:username')
   .get(authenticateToken, userController.getUser)
   .delete(authenticateToken, userController.deleteUser)
   .patch(authenticateToken, userController.updateUser);
+
 
 module.exports = router;

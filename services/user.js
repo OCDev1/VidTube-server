@@ -26,21 +26,40 @@ const getUsers = async () => {
   return await User.find({});
 };
 
-const updateUser = async (id, username, password, displayName, profilePicture) => {
-  const user = await getUserById(id);
-  if (!user) {
-    return null;
+const updateUser = async (username, newUsername, password, displayName, profilePicture) => {
+  try {
+    const user = await findUserByUsername(username);
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    
+    // Only update fields if they are provided
+    if (newUsername) user.username = newUsername;
+    if (password) user.password = password;
+    if (displayName) user.displayName = displayName;
+    if (profilePicture) user.profilePicture = profilePicture;
+
+    await user.save();
+    return user;
+  } catch (error) {
+    if (error.code === 11000) {
+      // Duplicate key error
+      if (error.keyPattern.username) {
+        return { error: 'Username already exists.' };
+      }
+      if (error.keyPattern.displayName) {
+        return { error: 'Display Name already exists.' };
+      }
+    } else {
+      throw error;
+    }
   }
-  user.username = username;
-  user.password = password;
-  user.displayName = displayName;
-  user.profilePicture = profilePicture;
-  await user.save();
-  return user;
 };
 
-const deleteUser = async (id) => {
-  const user = await getUserById(id);
+
+
+const deleteUser = async (username) => {
+  const user = await findUserByUsername(username);
   if (!user) {
     return null;
   }
@@ -48,8 +67,8 @@ const deleteUser = async (id) => {
   return user;
 };
 
-const getUserById = async (id) => {
-  return await User.findById(id);
+const findUserByUsername = async (username) => {
+  return await User.findOne({ username });
 };
 
 const findUserByUsernameAndPassword = async (username, password) => {
@@ -62,5 +81,5 @@ const generateToken = (user) => {
 };
 
 module.exports = {
-  createUser, getUsers, updateUser, deleteUser, getUserById, findUserByUsernameAndPassword, generateToken
+  createUser, getUsers, updateUser, deleteUser, findUserByUsername, findUserByUsernameAndPassword, generateToken
 };
