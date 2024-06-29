@@ -1,3 +1,5 @@
+// routes/videos.js
+
 const videoController = require('../controllers/video');
 const express = require('express');
 const { authenticateToken } = require('../middlewares/auth');
@@ -8,7 +10,7 @@ router.route('/videos')
   .get(videoController.getVideos);
 
 router.route('/videos/:id')
-    .get(videoController.getVideo);
+  .get(videoController.getVideo);
 
 router.route('/users/:id/videos')
   .get(videoController.getVideosByAuthor)
@@ -20,9 +22,9 @@ router.route('/users/:id/videos/:pid')
   .delete(authenticateToken, videoController.deleteVideo);
 
 router.route('/videos/:id/like')
-    .patch(videoController.likeVideo);
+  .patch(authenticateToken, videoController.likeVideo);
 
 router.route('/videos/:id/dislike')
-    .patch(videoController.dislikeVideo);
+  .patch(authenticateToken, videoController.dislikeVideo);
 
 module.exports = router;
