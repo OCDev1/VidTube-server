@@ -14,6 +14,10 @@ const Video = new Schema({
       type: String,
       required: true
     },
+    username: {
+      type: String,
+      required: true
+    },
     views: {
       type: String,
       default: 0,

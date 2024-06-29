@@ -17,7 +17,7 @@ router.route('/users/:id/videos')
   .post(authenticateToken, videoController.createVideo);
 
 router.route('/users/:id/videos/:pid')
-  .get(videoController.getVideo)
+  .get(videoController.getUserVideoById)
   .patch(authenticateToken, videoController.updateVideo)
   .delete(authenticateToken, videoController.deleteVideo);
 
