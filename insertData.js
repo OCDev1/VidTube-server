@@ -20,6 +20,19 @@ async function collectionExists(collectionName) {
   return collections.some((collection) => collection.name === collectionName);
 }
 
+// Function to convert file to base64
+function fileToBase64(filePath) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, { encoding: 'base64' }, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(`data:video/mp4;base64,${data}`);
+      }
+    });
+  });
+}
+
 // Main function to insert data from JSON files
 async function insertDataFromJson() {
   try {
@@ -53,10 +66,11 @@ async function insertDataFromJson() {
     const videoData = JSON.parse(fs.readFileSync(jsonVideoFilePath, "utf-8"));
     const videoObjects = {}; // Object to store the video objects
     for (const video of videoData) {
-      const { title, description, author, username, img, video: videoPath, authorImage } = video;
+      const { title, description, author, username, img, video: videoPath, authorImage, uploadTime, views } = video;
       const base64EncodedImg = base64Img.base64Sync(img);
       const base64EncodedAuthorImage = base64Img.base64Sync(authorImage);
-      const newVideo = await VideoService.createVideo(title, description, author, username, base64EncodedImg, videoPath, base64EncodedAuthorImage);
+      const base64EncodedVideo = await fileToBase64(videoPath);
+      const newVideo = await VideoService.createVideo(title, description, author, username, base64EncodedImg, base64EncodedVideo, base64EncodedAuthorImage, uploadTime, views);
       videoObjects[title] = newVideo._id; // Store the video _id using its title
     }
 
