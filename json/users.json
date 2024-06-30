@@ -1,0 +1,21 @@
+[
+    {
+      "username": "john_doe",
+      "password": "password123",
+      "displayName": "John Doe",
+      "profilePicture": "public/lebron.png"
+    },
+    {
+      "username": "jane_smith",
+      "password": "password456",
+      "displayName": "Jane Smith",
+      "profilePicture": "public/lebron.png"
+    },
+    {
+      "username": "sam_jackson",
+      "password": "password789",
+      "displayName": "Sam Jackson",
+      "profilePicture": "public/lebron.png"
+    }
+  ]
+  
