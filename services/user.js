@@ -42,12 +42,27 @@ const updateUser = async (username, newUsername, password, displayName, profileP
     await user.save();
 
     const updateFields = {};
-    if (newUsername) updateFields.username = newUsername;
-    if (displayName) updateFields.author = displayName;
-    if (profilePicture) updateFields.authorImage = profilePicture;
+    const commentUpdateFields = {};
+
+    if (newUsername) {
+      updateFields.username = newUsername;
+      commentUpdateFields.userName = newUsername;
+    }
+    if (displayName) {
+      updateFields.author = displayName;
+      commentUpdateFields.displayName = displayName;
+    }
+    if (profilePicture) {
+      updateFields.authorImage = profilePicture;
+      commentUpdateFields.img = profilePicture;
+    }
 
     if (Object.keys(updateFields).length > 0) {
       await Video.updateMany({ username: oldUsername }, updateFields);
+    }
+
+    if (Object.keys(commentUpdateFields).length > 0) {
+      await Comment.updateMany({ userName: oldUsername }, commentUpdateFields);
     }
 
     return user;
@@ -72,7 +87,7 @@ const deleteUser = async (username) => {
   }
   await user.deleteOne();
 
-  await Comment.deleteMany({ username });
+  await Comment.deleteMany({ userName: username });
   await Video.deleteMany({ username });
   return user;
 };
