@@ -36,18 +36,15 @@ const getVideosByAuthor = async (id) => {
   return await Video.find({ username: id });
 }
 
-const updateVideo = async ( id, title, description, author, username, img, video, authorImage ) => {
+const updateVideo = async (id, title, description, img, video) => {
   const cur_video = await getVideoById(id);
   if (!cur_video) {
     return null;
   }
   cur_video.title = title;
   cur_video.description = description;
-  cur_video.author = author;
-  cur_video.username = username;
   cur_video.img = img;
   cur_video.video = video;
-  cur_video.authorImage = authorImage;
   await cur_video.save();
   return cur_video;
 }

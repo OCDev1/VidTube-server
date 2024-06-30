@@ -35,10 +35,7 @@ const getUserVideoById = async (req, res) => {
 };
 
 const updateVideo = async (req, res) => {
-    const video = await videoService.updateVideo(req.params.pid, req.body.title,
-                                                 req.body.description, req.body.author,
-                                                 req.body.username, req.body.img,
-                                                 req.body.video, req.body.authorImage);
+    const video = await videoService.updateVideo(req.params.pid, req.body.title, req.body.description, req.body.img, req.body.video);
     if (!video) {
         return res.status(404).json({ errors: ['The video could not be found.'] });
     }
