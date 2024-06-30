@@ -9,7 +9,6 @@ const createUser = async (username, password, displayName, profilePicture) => {
     return await user.save();
   } catch (error) {
     if (error.code === 11000) {
-      // Duplicate key error
       if (error.keyPattern.username) {
         throw new Error('Username already exists.');
       }
@@ -21,8 +20,6 @@ const createUser = async (username, password, displayName, profilePicture) => {
     }
   }
 };
-
-
 
 const getUsers = async () => {
   return await User.find({});
@@ -37,7 +34,6 @@ const updateUser = async (username, newUsername, password, displayName, profileP
 
     const oldUsername = user.username;
     
-    // Only update fields if they are provided
     if (newUsername) user.username = newUsername;
     if (password) user.password = password;
     if (displayName) user.displayName = displayName;
@@ -57,7 +53,6 @@ const updateUser = async (username, newUsername, password, displayName, profileP
     return user;
   } catch (error) {
     if (error.code === 11000) {
-      // Duplicate key error
       if (error.keyPattern.username) {
         return { error: 'Username already exists.' };
       }
@@ -69,8 +64,6 @@ const updateUser = async (username, newUsername, password, displayName, profileP
     }
   }
 };
-
-
 
 const deleteUser = async (username) => {
   const user = await findUserByUsername(username);

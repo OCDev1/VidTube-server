@@ -110,4 +110,4 @@ async function dislikeVideo(videoId, userDisplayName) {
   }
 }
 
-module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor, likeVideo, dislikeVideo, getUserVideoById  };
+module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor, likeVideo, dislikeVideo, getUserVideoById };

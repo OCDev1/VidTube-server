@@ -7,7 +7,11 @@ const Comment = new Schema({
         type: String,
         required: true
     },
-    username: {
+    userName: {
+        type: String,
+        required: true
+    },
+    displayName: {
         type: String,
         required: true
     },
