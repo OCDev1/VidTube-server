@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Comment = require('../models/comment');
+const Video = require('../models/video');
 
 const createUser = async (username, password, displayName, profilePicture) => {
   try {
@@ -32,6 +34,8 @@ const updateUser = async (username, newUsername, password, displayName, profileP
     if (!user) {
       throw new Error('User not found.');
     }
+
+    const oldUsername = user.username;
     
     // Only update fields if they are provided
     if (newUsername) user.username = newUsername;
@@ -40,6 +44,16 @@ const updateUser = async (username, newUsername, password, displayName, profileP
     if (profilePicture) user.profilePicture = profilePicture;
 
     await user.save();
+
+    const updateFields = {};
+    if (newUsername) updateFields.username = newUsername;
+    if (displayName) updateFields.author = displayName;
+    if (profilePicture) updateFields.authorImage = profilePicture;
+
+    if (Object.keys(updateFields).length > 0) {
+      await Video.updateMany({ username: oldUsername }, updateFields);
+    }
+
     return user;
   } catch (error) {
     if (error.code === 11000) {
@@ -64,6 +78,9 @@ const deleteUser = async (username) => {
     return null;
   }
   await user.deleteOne();
+
+  await Comment.deleteMany({ username });
+  await Video.deleteMany({ username });
   return user;
 };
 

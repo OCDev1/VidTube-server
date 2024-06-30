@@ -1,4 +1,5 @@
 const Video = require('../models/video');
+const Comment = require('../models/comment');
 
 const createVideo = async (title, description, author, username, img, video, authorImage, uploadTime, views) => {
   const cur_video = new Video({
@@ -27,23 +28,26 @@ const getVideoById = async (id) => {
   return await Video.findById(id);
 };
 
-const getUserVideoById = async (pid) => {
-  return await Video.findById(pid);
+const getUserVideoById = async (pid, username) => {
+  return await Video.findOne({ _id: pid, username });
 };
 
 const getVideosByAuthor = async (id) => {
   return await Video.find({ username: id });
 }
 
-const updateVideo = async (id, title, description, img, video) => {
+const updateVideo = async ( id, title, description, author, username, img, video, authorImage ) => {
   const cur_video = await getVideoById(id);
   if (!cur_video) {
     return null;
   }
   cur_video.title = title;
   cur_video.description = description;
+  cur_video.author = author;
+  cur_video.username = username;
   cur_video.img = img;
   cur_video.video = video;
+  cur_video.authorImage = authorImage;
   await cur_video.save();
   return cur_video;
 }
@@ -54,6 +58,7 @@ const deleteVideo = async (id) => {
     return null;
   }
   await video.deleteOne();
+  await Comment.deleteMany({ videoId: id });
   return video;
 }
 
