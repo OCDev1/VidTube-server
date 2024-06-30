@@ -1,0 +1,21 @@
+[
+    {
+      "title": "First Video",
+      "description": "This is the first video description.",
+      "author": "John Doe",
+      "username": "john_doe",
+      "img": "public/pic3.jpg",
+      "video": "public/pic3.jpg",
+      "authorImage": "public/pic4.jpg"
+    },
+    {
+      "title": "Second Video",
+      "description": "This is the second video description.",
+      "author": "Jane Smith",
+      "username": "jane_smith",
+      "img": "public/pic4.jpg",
+      "video": "public/pic3.jpg",
+      "authorImage": "public/pic3.jpg"
+    }
+  ]
+  
