@@ -18,8 +18,7 @@ const signInUser = async (req, res) => {
   if (!user) {
     return res.status(401).json({ errors: ['Invalid username or password'] });
   }
-  const token = userService.generateToken(user);
-  res.json({ user, token });
+  res.json(user);
 };
 
 const getUser = async (req, res) => {
@@ -44,7 +43,6 @@ const updateUser = async (req, res) => {
   res.json(result);
 };
 
-
 const deleteUser = async (req, res) => {
   const user = await userService.deleteUser(req.params.username);
   if (!user) {
@@ -52,7 +50,6 @@ const deleteUser = async (req, res) => {
   }
   res.json(user);
 };
-
 
 module.exports = {
   createUser, getUsers, getUser, updateUser, deleteUser, signInUser

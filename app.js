@@ -33,6 +33,8 @@ const videos = require('./routes/video');
 app.use('/api', videos);
 const commentsRouter = require('./routes/comment');
 app.use('/api', commentsRouter);
+const tokenRoutes = require('./routes/token');
+app.use('/api', tokenRoutes);
 
 
 // The "catchall" handler: for any request that doesn't match an API route,
