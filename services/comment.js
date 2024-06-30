@@ -1,7 +1,7 @@
 const Comment = require('../models/comment');
 
-const createComment = async (text, username, date, img, videoId) => {
-    const comment = new Comment({ text, username, date, img, videoId });
+const createComment = async (text, userName, displayName, date, img, videoId) => {
+    const comment = new Comment({ text, userName, displayName, date, img, videoId });
     try {
       const savedComment = await comment.save();
       return savedComment; // Return the saved comment object
@@ -10,8 +10,6 @@ const createComment = async (text, username, date, img, videoId) => {
     }
   };
   
-  
-
 const getComments = async () => {
   return await Comment.find({});
 };

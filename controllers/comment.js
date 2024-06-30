@@ -1,7 +1,8 @@
 const commentService = require('../services/comment');
 
 const createComment = async (req, res) => {
-  res.json(await commentService.createComment(req.body.text, req.body.username, req.body.date, req.body.img, req.body.videoId));
+  console.log("req body:", req)
+  res.json(await commentService.createComment(req.body.text, req.body.userName, req.body.userDisplayName, req.body.date, req.body.img, req.body.videoId));
 };
 
 const updateComment = async (req, res) => {
