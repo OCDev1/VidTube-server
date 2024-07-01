@@ -110,10 +110,10 @@ in this page you can also view, delete or edit (redirects to edit page) your vid
 ![Alt text](/Web-app-Screenshots/Screenshot_1.jpg)
 
 ## Home Page (logged in):
-![Alt text](/Web-app-Screenshots/Screenshot_2.png)
+![Alt text](/Web-app-Screenshots/Screenshot_2.jpg)
 
 ## Home Page (Dark mode):
-![Alt text](/Web-app-Screenshots/Screenshot_3.png)
+![Alt text](/Web-app-Screenshots/Screenshot_3.jpg)
 
 ## Upload-Video Page:
 ![Alt text](/Web-app-Screenshots/Screenshot_4.png)
