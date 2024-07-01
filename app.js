@@ -1,11 +1,10 @@
 const express = require('express');
 const path = require('path');
-var app = express();
-
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const customEnv = require('custom-env');
 const mongoose = require('mongoose');
+var app = express();
 
 customEnv.env(process.env.NODE_ENV, './config');
 console.log(process.env.CONNECTION_STRING);
@@ -23,6 +22,9 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(cors());
 app.use(express.static('public'));
 
+// Serve static files from the 'public/uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,7 +37,6 @@ const commentsRouter = require('./routes/comment');
 app.use('/api', commentsRouter);
 const tokenRoutes = require('./routes/token');
 app.use('/api', tokenRoutes);
-
 
 // The "catchall" handler: for any request that doesn't match an API route,
 // send back React's index.html file.
