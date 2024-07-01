@@ -22,7 +22,7 @@ const signInUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const user = await userService.findUserByUsername(req.params.username);
+  const user = await userService.findUserByUsername(req.params.id);
   if (!user) {
     return res.status(404).json({ errors: ['User not found'] });
   }
@@ -30,7 +30,7 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const result = await userService.updateUser(req.params.username, req.body.username, req.body.password, req.body.displayName, req.body.profilePicture);
+  const result = await userService.updateUser(req.params.id, req.body.username, req.body.password, req.body.displayName, req.body.profilePicture);
   
   if (result.error) {
     return res.status(400).json({ errors: [result.error] });
@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const user = await userService.deleteUser(req.params.username);
+  const user = await userService.deleteUser(req.params.id);
   if (!user) {
     return res.status(404).json({ errors: ['User not found'] });
   }

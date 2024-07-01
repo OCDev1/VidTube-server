@@ -25,9 +25,9 @@ const getUsers = async () => {
   return await User.find({});
 };
 
-const updateUser = async (username, newUsername, password, displayName, profilePicture) => {
+const updateUser = async (id, newUsername, password, displayName, profilePicture) => {
   try {
-    const user = await findUserByUsername(username);
+    const user = await findUserByUsername(id);
     if (!user) {
       throw new Error('User not found.');
     }
@@ -80,15 +80,15 @@ const updateUser = async (username, newUsername, password, displayName, profileP
   }
 };
 
-const deleteUser = async (username) => {
-  const user = await findUserByUsername(username);
+const deleteUser = async (id) => {
+  const user = await findUserByUsername(id);
   if (!user) {
     return null;
   }
   await user.deleteOne();
 
-  await Comment.deleteMany({ userName: username });
-  await Video.deleteMany({ username });
+  await Comment.deleteMany({ userName: id });
+  await Video.deleteMany({ username : id });
   return user;
 };
 

@@ -10,7 +10,7 @@ router.route('/users')
 router.route('/users/signin')
   .post(userController.signInUser);
 
-  router.route('/users/:username')
+  router.route('/users/:id')
   .get(authenticateToken, userController.getUser)
   .delete(authenticateToken, userController.deleteUser)
   .patch(authenticateToken, userController.updateUser);
