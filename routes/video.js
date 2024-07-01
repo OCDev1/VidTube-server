@@ -9,6 +9,9 @@ const router = express.Router();
 router.route('/videos')
   .get(videoController.getVideos);
 
+router.route('/allvideos')
+  .get(videoController.getAllVideos);
+
 router.route('/videos/:id')
   .get(videoController.getVideo);
 

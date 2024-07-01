@@ -10,6 +10,10 @@ const getVideos = async (_, res) => {
     res.json(await videoService.getVideos())
 };
 
+const getAllVideos = async (_, res) => {
+    res.json(await videoService.getAllVideos())
+}
+
 const getVideo = async (req, res) => {
     const video = await videoService.getVideoById(req.params.id);
     if (!video) {
@@ -75,4 +79,4 @@ async function likeVideo(req, res) {
     }
   }
 
-module.exports = { createVideo, getVideos, getVideo, updateVideo, deleteVideo, getVideosByAuthor, likeVideo ,dislikeVideo, getUserVideoById };
+module.exports = { createVideo, getVideos, getAllVideos, getVideo, updateVideo, deleteVideo, getVideosByAuthor, likeVideo ,dislikeVideo, getUserVideoById };
