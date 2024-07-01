@@ -143,15 +143,19 @@ in this page you can also view, delete or edit (redirects to edit page) your vid
 ![Alt text](/Web-app-Screenshots/Screenshot_12.png)
 
 ## Watch-Video Page Comment section (Comment, like, dislike, edit, delete):
-![Alt text](/Web-app-Screenshots/Screenshot_13.png)
+![Alt text](/Web-app-Screenshots/Screenshot_91.jpg)
 -----------------------------------------------------
-![Alt text](/Web-app-Screenshots/Screenshot_14.png)
+![Alt text](/Web-app-Screenshots/Screenshot_92.jpg)
 -----------------------------------------------------
-![Alt text](/Web-app-Screenshots/Screenshot_15.png)
+![Alt text](/Web-app-Screenshots/Screenshot_93.jpg)
 -----------------------------------------------------
-![Alt text](/Web-app-Screenshots/Screenshot_16.png)
+![Alt text](/Web-app-Screenshots/Screenshot_94.jpg)
 -----------------------------------------------------
-![Alt text](/Web-app-Screenshots/Screenshot_17.png)
+![Alt text](/Web-app-Screenshots/Screenshot_95.jpg)
+-----------------------------------------------------
+![Alt text](/Web-app-Screenshots/Screenshot_96.jpg)
+-----------------------------------------------------
+![Alt text](/Web-app-Screenshots/Screenshot_97.jpg)
 
 ## Edit-Video Page (and editing a video):
 ![Alt text](/Web-app-Screenshots/Screenshot_18.png)
@@ -167,7 +171,7 @@ in this page you can also view, delete or edit (redirects to edit page) your vid
 ![Alt text](/Web-app-Screenshots/Screenshot_23.png)
 
 ## User Profile Page (for himself):
-![Alt text](/Web-app-Screenshots/Screenshot_40.png)
+![Alt text](/Web-app-Screenshots/Screenshot_40.jpg)
 
 ## User Profile page (other users):
-![Alt text](/Web-app-Screenshots/Screenshot_41.png)
+![Alt text](/Web-app-Screenshots/Screenshot_41.jpg)
