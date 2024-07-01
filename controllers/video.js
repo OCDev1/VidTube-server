@@ -1,10 +1,18 @@
 const videoService = require('../services/video');
 
 const createVideo = async (req, res) => {
-    res.json(await videoService.createVideo(req.body.title, req.body.description,
-                                            req.body.author, req.body.username,
-                                            req.body.img, req.body.video, req.body.authorImage))
+  const { title, description, author, username, authorImage, uploadTime } = req.body;
+  const img = req.files['img'] ? `http://localhost:${process.env.PORT}/uploads/${req.files['img'][0].filename}` : null;
+  const video = req.files['video'] ? `http://localhost:${process.env.PORT}/uploads/${req.files['video'][0].filename}` : null;
+
+  try {
+      const newVideo = await videoService.createVideo(title, description, author, username, img, video, authorImage, uploadTime);
+      res.json(newVideo);
+  } catch (error) {
+      res.status(500).json({ errors: [error.message] });
+  }
 };
+
 
 const getVideos = async (_, res) => {
     res.json(await videoService.getVideos())
@@ -35,11 +43,19 @@ const getUserVideoById = async (req, res) => {
 };
 
 const updateVideo = async (req, res) => {
-    const video = await videoService.updateVideo(req.params.pid, req.body.title, req.body.description, req.body.img, req.body.video);
-    if (!video) {
-        return res.status(404).json({ errors: ['The video could not be found.'] });
-    }
-    res.json(video);
+  const { title, description } = req.body;
+  const img = req.files['img'] ? `http://localhost:${process.env.PORT}/uploads/${req.files['img'][0].filename}` : undefined;
+  const video = req.files['video'] ? `http://localhost:${process.env.PORT}/uploads/${req.files['video'][0].filename}` : undefined;
+
+  try {
+      const updatedVideo = await videoService.updateVideo(req.params.pid, title, description, img, video);
+      if (!updatedVideo) {
+          return res.status(404).json({ errors: ['The video could not be found.'] });
+      }
+      res.json(updatedVideo);
+  } catch (error) {
+      res.status(500).json({ errors: [error.message] });
+  }
 };
 
 const deleteVideo = async (req, res) => {

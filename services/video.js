@@ -3,24 +3,10 @@ const Comment = require('../models/comment');
 
 const createVideo = async (title, description, author, username, img, video, authorImage, uploadTime, views) => {
   try {
-    const cur_video = new Video({
-      title: title,
-      description: description,
-      author: author,
-      username: username,
-      img: img,
-      video: video,
-      authorImage: authorImage
-    });
-    if (uploadTime) { 
-      cur_video.uploadTime = uploadTime;
-    }
-    if (views) {
-      cur_video.views = views;
-    }
-    return await cur_video.save();
+      const newVideo = new Video({ title, description, author, username, img, video, authorImage, uploadTime, views });
+      return await newVideo.save();
   } catch (error) {
-    throw error;
+      throw error;
   }
 };
 
@@ -58,20 +44,19 @@ const getVideosByAuthor = async (id) => {
 
 const updateVideo = async (id, title, description, img, video) => {
   try {
-    const cur_video = await getVideoById(id);
-    if (!cur_video) {
-      return null;
-    }
-    cur_video.title = title;
-    cur_video.description = description;
-    cur_video.img = img;
-    cur_video.video = video;
-    await cur_video.save();
-    return cur_video;
+      const cur_video = await getVideoById(id);
+      if (!cur_video) {
+          return null;
+      }
+      cur_video.title = title;
+      cur_video.description = description;
+      if (img) cur_video.img = img;
+      if (video) cur_video.video = video;
+      return await cur_video.save();
   } catch (error) {
-    throw error;
+      throw error;
   }
-}
+};
 
 const deleteVideo = async (id) => {
   try {
