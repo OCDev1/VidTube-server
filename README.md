@@ -1,5 +1,5 @@
 # VidTube-Web app
-<img src="/Web-app-Screenshots/logo_vidtube.png" alt="Example Image" width="300">
+<img src="/Web-app-Screenshots/logo_vidtube.png" alt="Logo" width="300">
 
 The VidTube app is a video sharing app, made for allowing users across the world to upload and share their video content, comment their thoughts and interact with each other.
 This Readme file contains an overview of the web app and its features, along with the server and a guide on how to run it on your machine.
@@ -10,7 +10,7 @@ In order to run the Web app, start by cloning the repository to your IDE of choi
 
 Or download the repository to your computer.
 
-* Change the directory in your terminal to the downloaded repo directory.
+If you downloaded the repo-change the directory in your terminal to the downloaded repo directory. (if you cloned to your IDE then ignore this)
 
 While in the project directory run:
 ### `npm install`
@@ -23,8 +23,8 @@ In the project directory go to the "config" folder (its in the main project dire
 it should look something like this:
 
 `CONNECTION_STRING=mongodb://localhost:27017/vidtube (change to the connection string of your MongoDB)
-PORT=12345 (change to the port you would like to run on)
-JWT_SECRET=your_secret_key (you can ignore this)`
+PORT=12345 (change to the port you would like to run on)`
+there is also `JWT_SECRET=your_secret_key` (you can ignore this)
 
 
 * Open MongoDB on your computer.
@@ -32,7 +32,7 @@ JWT_SECRET=your_secret_key (you can ignore this)`
 ### insertData.js script
 * Included in the project is a script called "insertData.js" which will initialize the database with users, videos and comments. we highly reccomend you run this script in order to get the best experience and see all the features (and also to save you some time (: )
 
-You can run the script by typing `node insertData.js` wait for the script to finish and your database should be initialized with videos, users and comments, hooray!
+* You can run the script by typing `node insertData.js` wait for the script to finish and your database should be initialized with videos, users and comments, hooray!
 
 * NOTE: in order for the DB to be initialized with the users, videos and comments of the script, make sure you dont already have a database called "vidtube" (or else the script won't add it's data), if you do then delete the database and run the script again. 
 
@@ -40,7 +40,7 @@ Now you can run
 
 ### `npm start`
 
-And open http://localhost:PORT (replace PORT with the actual port number you chose in the .env.local file) to view it in your browser.
+And open http://localhost:12345 (replace "12345" with the actual port number you chose in the .env.local file) to view it in your browser.
 
 Now you are all set up, enjoy!
 
@@ -58,6 +58,8 @@ in this page you can also view, delete or edit (redirects to edit page) your vid
 * in the watch video screen, clicking the uploaders image or name will take you to his profile page where you can see more videos that he uploaded.
 
 * Users can now edit and delete only their own comments and videos.
+
+----------------------------------------------------------------------------------
 
 * The **Home page** contains many exciting features such as:
     * A video list displaying some of the videos on the platform
