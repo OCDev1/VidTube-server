@@ -10,7 +10,55 @@ const createVideo = async (title, description, author, username, img, video, aut
   }
 };
 
-const getVideos = async () => { 
+const getVideos = async () => {
+  try {
+    const allVideos = await Video.find({});
+    
+    // Convert view counts to integers
+    allVideos.forEach(video => {
+      const viewsStr = video.views;
+      let viewsInt;
+
+      if (viewsStr.endsWith('K')) {
+        viewsInt = parseFloat(viewsStr.replace('K', '')) * 1000;
+      } else if (viewsStr.endsWith('M')) {
+        viewsInt = parseFloat(viewsStr.replace('M', '')) * 1000000;
+      } else {
+        viewsInt = parseFloat(viewsStr.replace(/\D/g, ''));
+      }
+
+      video.views = viewsInt;
+    });
+
+    // Sort videos by view count in descending order
+    const mostViewedVideos = allVideos.sort((a, b) => b.views - a.views).slice(0, 10);
+
+    // Shuffle the remaining videos and pick 10 random ones
+    const shuffledVideos = allVideos.sort(() => 0.5 - Math.random());
+    const randomVideos = shuffledVideos.filter(video => !mostViewedVideos.includes(video)).slice(0, 10);
+
+    // Combine the two sets of videos
+    const selectedVideos = [...mostViewedVideos, ...randomVideos].sort(() => Math.random() - 0.5);
+
+    // Convert the views back to formatted strings
+    selectedVideos.forEach(video => {
+      if (video.views >= 1000000) {
+        video.views = (video.views / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+      } else if (video.views >= 1000) {
+        video.views = (video.views / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+      } else {
+        video.views = video.views.toString();
+      }
+    });
+
+    return selectedVideos;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+const getAllVideos = async () => { 
   try {
     return await Video.find({});
   } catch (error) {
@@ -123,4 +171,4 @@ async function dislikeVideo(videoId, userDisplayName) {
   }
 }
 
-module.exports = { createVideo, getVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor, likeVideo, dislikeVideo, getUserVideoById };
+module.exports = { createVideo, getVideos, getAllVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor, likeVideo, dislikeVideo, getUserVideoById };
