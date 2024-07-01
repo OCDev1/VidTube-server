@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Comment = require('../models/comment');
+const Video = require('../models/video');
 
 const createUser = async (username, password, displayName, profilePicture) => {
   try {
@@ -23,12 +25,14 @@ const getUsers = async () => {
   return await User.find({});
 };
 
-const updateUser = async (username, newUsername, password, displayName, profilePicture) => {
+const updateUser = async (id, newUsername, password, displayName, profilePicture) => {
   try {
-    const user = await findUserByUsername(username);
+    const user = await findUserByUsername(id);
     if (!user) {
       throw new Error('User not found.');
     }
+
+    const oldUsername = user.username;
     
     if (newUsername) user.username = newUsername;
     if (password) user.password = password;
@@ -36,6 +40,31 @@ const updateUser = async (username, newUsername, password, displayName, profileP
     if (profilePicture) user.profilePicture = profilePicture;
 
     await user.save();
+
+    const updateFields = {};
+    const commentUpdateFields = {};
+
+    if (newUsername) {
+      updateFields.username = newUsername;
+      commentUpdateFields.userName = newUsername;
+    }
+    if (displayName) {
+      updateFields.author = displayName;
+      commentUpdateFields.displayName = displayName;
+    }
+    if (profilePicture) {
+      updateFields.authorImage = profilePicture;
+      commentUpdateFields.img = profilePicture;
+    }
+
+    if (Object.keys(updateFields).length > 0) {
+      await Video.updateMany({ username: oldUsername }, updateFields);
+    }
+
+    if (Object.keys(commentUpdateFields).length > 0) {
+      await Comment.updateMany({ userName: oldUsername }, commentUpdateFields);
+    }
+
     return user;
   } catch (error) {
     if (error.code === 11000) {
@@ -51,12 +80,15 @@ const updateUser = async (username, newUsername, password, displayName, profileP
   }
 };
 
-const deleteUser = async (username) => {
-  const user = await findUserByUsername(username);
+const deleteUser = async (id) => {
+  const user = await findUserByUsername(id);
   if (!user) {
     return null;
   }
   await user.deleteOne();
+
+  await Comment.deleteMany({ userName: id });
+  await Video.deleteMany({ username : id });
   return user;
 };
 
