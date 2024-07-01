@@ -33,6 +33,7 @@ const updateUser = async (id, newUsername, password, displayName, profilePicture
     }
 
     const oldUsername = user.username;
+    const oldDisplayName = user.displayName;
     
     if (newUsername) user.username = newUsername;
     if (password) user.password = password;
@@ -59,10 +60,14 @@ const updateUser = async (id, newUsername, password, displayName, profilePicture
 
     if (Object.keys(updateFields).length > 0) {
       await Video.updateMany({ username: oldUsername }, updateFields);
+      await Video.updateMany({ likes: oldDisplayName }, { $set: { "likes.$": displayName } });
+      await Video.updateMany({ dislikes: oldDisplayName }, { $set: { "dislikes.$": displayName } });
     }
 
     if (Object.keys(commentUpdateFields).length > 0) {
       await Comment.updateMany({ userName: oldUsername }, commentUpdateFields);
+      await Comment.updateMany({ likes: oldDisplayName }, { $set: { "likes.$": displayName } });
+      await Comment.updateMany({ dislikes: oldDisplayName }, { $set: { "dislikes.$": displayName } });
     }
 
     return user;
@@ -85,10 +90,18 @@ const deleteUser = async (id) => {
   if (!user) {
     return null;
   }
+
+  const displayName = user.displayName;
   await user.deleteOne();
 
   await Comment.deleteMany({ userName: id });
   await Video.deleteMany({ username : id });
+
+  await Video.updateMany({ likes: displayName }, { $pull: { likes: displayName } });
+  await Video.updateMany({ dislikes: displayName }, { $pull: { dislikes: displayName } });
+
+  await Comment.updateMany({ likes: displayName }, { $pull: { likes: displayName } });
+  await Comment.updateMany({ dislikes: displayName }, { $pull: { dislikes: displayName } });
   return user;
 };
 
