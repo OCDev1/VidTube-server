@@ -3,12 +3,19 @@ const express = require('express');
 const { authenticateToken } = require('../middlewares/auth');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+
+const uploadPath = path.join(__dirname, '../public/uploads/');
+
+// Ensure uploads directory exists
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
 // Define the storage configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const uploadPath = path.join(__dirname, '../public/uploads/'); // Specify the directory to store uploaded files
-    cb(null, uploadPath);
+    cb(null, uploadPath); // Specify the directory to store uploaded files
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname); // Generate a unique filename
