@@ -62,7 +62,7 @@ in this page you can also view, delete or edit (redirects to edit page) your vid
 ----------------------------------------------------------------------------------
 
 * The **Home page** contains many exciting features such as:
-    * A video list displaying some of the videos on the platform
+    * A video list displaying in a random order some of the videos on the platform
     * A search bar where you can filter videos by title
     * The ability to sign in (or sign up and then sign in) which unlocks more features such as:
         * Upload video - share your videos and content with the world (note: videos must contain a title, description, thumbnail etc.).
@@ -85,11 +85,11 @@ in this page you can also view, delete or edit (redirects to edit page) your vid
     * Here you can share your video content with the world!
     * Choose a catchy title, informative description, an eye catching thumbnail and then select the video you want to share.
       click 'Upload To Vidtube' and your video can be seen on VidTube!
-    * Your new video will be posted under your Display name and your profile picture, with a fresh comment from the Official VidTube account welcoming your new content to the platform.
+    * Your new video will be posted under your Display name and your profile picture. (Note that the home page displays 20 videos, the 10 most popular and 10 other random videos, so your video might not show up on the home page straight away, but you can see it in your profile page, just click the your username in the top right of the screen)
     * Having second thoughts? don't worry, just click the 'cancel' button and you will be brought back to the Home page!
 
 * The **Edit-Video Page**:
-    * We believe in second chances! Here you can edit videos, and change their title, description, thumbnail or the video itself.
+    * We believe in second chances! Here you can edit videos, and change their title, description, thumbnail or the video itself. (Note that the home page displays 20 videos, the 10 most popular and 10 other random videos, so your video might not show up on the home page straight away, but you can see it in your profile page, just click the your username in the top right of the screen)
     * Having second thoughts? don't worry, just click the 'cancel' button and you will be brought back to the Home page!
 
 * The **Sign-in Page**:
