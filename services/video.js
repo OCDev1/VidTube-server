@@ -1,60 +1,90 @@
 const Video = require('../models/video');
+const Comment = require('../models/comment');
 
 const createVideo = async (title, description, author, username, img, video, authorImage, uploadTime, views) => {
-  const cur_video = new Video({
-    title: title,
-    description: description,
-    author: author,
-    username: username,
-    img: img,
-    video: video,
-    authorImage: authorImage
-  });
-  if (uploadTime) { 
-    cur_video.uploadTime = uploadTime;
+  try {
+    const cur_video = new Video({
+      title: title,
+      description: description,
+      author: author,
+      username: username,
+      img: img,
+      video: video,
+      authorImage: authorImage
+    });
+    if (uploadTime) { 
+      cur_video.uploadTime = uploadTime;
+    }
+    if (views) {
+      cur_video.views = views;
+    }
+    return await cur_video.save();
+  } catch (error) {
+    throw error;
   }
-  if (views) {
-    cur_video.views = views;
-  }
-  return await cur_video.save();
 };
 
 const getVideos = async () => { 
-  return await Video.find({});
+  try {
+    return await Video.find({});
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getVideoById = async (id) => {
-  return await Video.findById(id);
+  try {
+    return await Video.findById(id);
+  } catch (error) {
+    throw error;
+  }
 };
 
-const getUserVideoById = async (pid) => {
-  return await Video.findById(pid);
+const getUserVideoById = async (pid, username) => {
+  try {
+    return await Video.findOne({ _id: pid, username });
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getVideosByAuthor = async (id) => {
-  return await Video.find({ username: id });
+  try {
+    return await Video.find({ username: id });
+  } catch (error) {
+    throw error;
+  }
 }
 
 const updateVideo = async (id, title, description, img, video) => {
-  const cur_video = await getVideoById(id);
-  if (!cur_video) {
-    return null;
+  try {
+    const cur_video = await getVideoById(id);
+    if (!cur_video) {
+      return null;
+    }
+    cur_video.title = title;
+    cur_video.description = description;
+    cur_video.img = img;
+    cur_video.video = video;
+    await cur_video.save();
+    return cur_video;
+  } catch (error) {
+    throw error;
   }
-  cur_video.title = title;
-  cur_video.description = description;
-  cur_video.img = img;
-  cur_video.video = video;
-  await cur_video.save();
-  return cur_video;
 }
 
 const deleteVideo = async (id) => {
-  const video = await getVideoById(id);
-  if (!video) {
-    return null;
+  try {
+    const video = await getVideoById(id);
+    if (!video) {
+      return null;
+    }
+    await video.deleteOne();
+    await Comment.deleteMany({ videoId: id });
+    return video;
+  } catch (error) {
+    throw error;
   }
-  await video.deleteOne();
-  return video;
 }
 
 

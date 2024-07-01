@@ -1,0 +1,32 @@
+[
+  {
+    "username": "john_doe",
+    "password": "password123",
+    "displayName": "John Doe",
+    "profilePicture": "public/profileImages/profile1.jpg"
+  },
+  {
+    "username": "jane_smith",
+    "password": "password456",
+    "displayName": "Jane Smith",
+    "profilePicture": "public/profileImages/profile2.jpg"
+  },
+  {
+    "username": "sam_jackson",
+    "password": "password789",
+    "displayName": "Sam Jackson",
+    "profilePicture": "public/profileImages/profile3.jpg"
+  },
+  {
+    "username": "tom_white",
+    "password": "password101",
+    "displayName": "Tom White",
+    "profilePicture": "public/profileImages/profile4.jpg"
+  },
+  {
+    "username": "emma_brown",
+    "password": "password102",
+    "displayName": "Emma Brown",
+    "profilePicture": "public/profileImages/profile5.jpg"
+  }
+]

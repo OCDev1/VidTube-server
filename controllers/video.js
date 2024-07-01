@@ -26,10 +26,10 @@ const getVideosByAuthor = async (req, res) => {
     res.json(videos);
 };
 
- const getUserVideoById = async (req, res) => {
-    const video = await videoService.getUserVideoById(req.params.pid);
+const getUserVideoById = async (req, res) => {
+    const video = await videoService.getUserVideoById(req.params.pid, req.params.id);
     if (!video) {
-        return res.status(404).json({ errors: ['The video could not be found.'] });
+      return res.status(404).json({ errors: ['The video could not be found.'] });
     }
     res.json(video);
 };
