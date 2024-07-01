@@ -6,7 +6,7 @@ const generateToken = async (req, res) => {
     return res.status(401).json({ errors: ['Invalid username or password'] });
   }
   const token = userService.generateToken(user);
-  res.json({ user, token });
+  res.json({ token });
 };
 
 module.exports = {
