@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
-const base64Img = require("base64-img");
+const path = require("path");
 const customENV = require("custom-env");
 
 const UserService = require("./services/user");
@@ -18,19 +18,6 @@ customENV.env(process.env.NODE_ENV, "./config");
 async function collectionExists(collectionName) {
   const collections = await mongoose.connection.db.listCollections().toArray();
   return collections.some((collection) => collection.name === collectionName);
-}
-
-// Function to convert file to base64
-function fileToBase64(filePath) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, { encoding: 'base64' }, (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(`data:video/mp4;base64,${data}`);
-      }
-    });
-  });
 }
 
 // Main function to insert data from JSON files
@@ -54,12 +41,14 @@ async function insertDataFromJson() {
       return;
     }
 
+    const baseURL = `http://localhost:${process.env.PORT}`;
+
     // Insert user data from JSON file
     const userData = JSON.parse(fs.readFileSync(jsonUserFilePath, "utf-8"));
     for (const user of userData) {
       const { username, password, displayName, profilePicture } = user;
-      const base64EncodedProfilePicture = base64Img.base64Sync(profilePicture);
-      await UserService.createUser(username, password, displayName, base64EncodedProfilePicture);
+      const profilePictureURL = `${baseURL}/profileImages/${path.basename(profilePicture)}`;
+      await UserService.createUser(username, password, displayName, profilePictureURL);
     }
 
     // Insert video data from JSON file and store the video objects
@@ -67,10 +56,10 @@ async function insertDataFromJson() {
     const videoObjects = {}; // Object to store the video objects
     for (const video of videoData) {
       const { title, description, author, username, img, video: videoPath, authorImage, uploadTime, views } = video;
-      const base64EncodedImg = base64Img.base64Sync(img);
-      const base64EncodedAuthorImage = base64Img.base64Sync(authorImage);
-      const base64EncodedVideo = await fileToBase64(videoPath);
-      const newVideo = await VideoService.createVideo(title, description, author, username, base64EncodedImg, base64EncodedVideo, base64EncodedAuthorImage, uploadTime, views);
+      const imgURL = `${baseURL}/images/${path.basename(img)}`;
+      const videoURL = `${baseURL}/mainVideos/${path.basename(videoPath)}`;
+      const authorImageURL = `${baseURL}/profileImages/${path.basename(authorImage)}`;
+      const newVideo = await VideoService.createVideo(title, description, author, username, imgURL, videoURL, authorImageURL, uploadTime, views);
       videoObjects[title] = newVideo._id; // Store the video _id using its title
     }
 
@@ -78,10 +67,10 @@ async function insertDataFromJson() {
     const commentData = JSON.parse(fs.readFileSync(jsonCommentFilePath, "utf-8"));
     for (const comment of commentData) {
       const { text, userName, displayName, date, img: commentImg, videoTitle } = comment; // Assuming videoTitle is used to link
-      const base64EncodedCommentImg = base64Img.base64Sync(commentImg);
+      const commentImgURL = `${baseURL}/profileImages/${path.basename(commentImg)}`;
       const videoId = videoObjects[videoTitle];
       if (videoId) {
-        await CommentService.createComment(text, userName, displayName, date, base64EncodedCommentImg, videoId);
+        await CommentService.createComment(text, userName, displayName, date, commentImgURL, videoId);
       } else {
         console.error(`Video title "${videoTitle}" not found for comment.`);
       }
