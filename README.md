@@ -1,6 +1,8 @@
 # VidTube-Web app (Server)
 <img src="/Web-app-Screenshots/logo_vidtube.png" alt="Logo" width="300">
 
+NOTE: this branch is for the web app, see branch 'main-part3' for the Android app, this is because there are different database intialization scripts for Web and Android (so make sure to dump database before starting the Android database intialization script) for your convenience, you can use the script in the branch "main-part3", it works both for Web AND Android.
+
 The VidTube app is a video sharing app, made for allowing users across the world to upload and share their video content, comment their thoughts and interact with each other.
 This Readme file contains an overview of the web app and its features, along with the server and a guide on how to run it on your machine.
 
@@ -19,17 +21,19 @@ and wait for it to finish installing.
 
 ### Setting up config and .env.local
 In the project directory go to the "config" folder (its in the main project directory) and inside it you will find a file called ".env.local", inside 
-".env.local" change the conncetion string to the connection string of your MongoDB, and change PORT to the port you would like to run on.
+".env.local" change the conncetion string to the connection string of your MongoDB, and set PORT to 12345.
 it should look something like this:
 
-`CONNECTION_STRING=mongodb://localhost:27017/vidtube (change to the connection string of your MongoDB)
-PORT=12345 (change to the port you would like to run on)`
-there is also `JWT_SECRET=your_secret_key` (you can ignore this)
+`CONNECTION_STRING=mongodb://localhost:27017/vidtube` (change to the connection string of your MongoDB)
+<br>`PORT=12345` (NOTE: you must use 12345 for it to work)
+<br>there is also `JWT_SECRET=your_secret_key` (you can ignore this)
 
 
 * Open MongoDB on your computer.
 
 ### insertData.js script
+NOTE: this script works for Web only, you can use the script in branch "main-part3" instead, as it works for both Web AND Android.
+
 * Included in the project is a script called "insertData.js" which will initialize the database with users, videos and comments. we highly reccomend you run this script in order to get the best experience and see all the features (and also to save you some time (: )
 
 * You can run the script by typing `node insertData.js` wait for the script to finish and your database should be initialized with videos, users and comments, hooray!
@@ -40,11 +44,11 @@ Now you can run
 
 ### `npm start`
 
-And open http://localhost:12345 (replace "12345" with the actual port number you chose in the .env.local file) to view it in your browser.
+And open http://localhost:12345 (again, note that you put 12345 as the port in .env.local) to view it in your browser.
 
 Now you are all set up, enjoy!
 
-NOTE: you dont need to add the build from the frontend directory, but if you do, make sure not to delete any of the photos and videos in the "public" folder in this project, or else the insertData.js script wont be able to add it's data.
+IMPORTANT NOTE: you dont need to add the build from the frontend project directory, but if you do, make sure not to delete any of the photos and videos in the "public" folder in this project, or else the insertData.js script wont be able to add it's data.
 
 ## Our work process:
 Again, we started off by watching Hemi's videos in the moodle, they helped us understand how the server should work with the client side we built on the first part of the project. Each member of the group was working on a different part of the server, Max worked on the videos part, Eyal worked on the users part, and Omri worked on the comments part. We then connected the server to work with the client side but before we did it, we modified the client side to work with, POST, GET and more methods in order for it to work with the server. Then after that worked we connected a Mongo database to work with the server.
