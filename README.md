@@ -21,11 +21,11 @@ and wait for it to finish installing.
 
 ### Setting up config and .env.local
 In the project directory go to the "config" folder (its in the main project directory) and inside it you will find a file called ".env.local", inside 
-".env.local" change the conncetion string to the connection string of your MongoDB, and change PORT to the port you would like to run on.
+".env.local" change the conncetion string to the connection string of your MongoDB, and set PORT to 12345.
 it should look something like this:
 
 `CONNECTION_STRING=mongodb://localhost:27017/vidtube (change to the connection string of your MongoDB)
-<br>PORT=12345 (NOTE: you must use 12345 for it to work, sorry for the inconvenience)`
+<br> PORT=12345 (NOTE: you must use 12345 for it to work, sorry for the inconvenience)`
 <br>there is also `JWT_SECRET=your_secret_key` (you can ignore this)
 
 
@@ -42,7 +42,7 @@ Now you can run
 
 ### `npm start`
 
-And open http://localhost:12345 (replace "12345" with the actual port number you chose in the .env.local file) to view it in your browser.
+And open http://localhost:12345 (again, note that you put 12345 as the port in .env.local) to view it in your browser.
 
 Now you are all set up, enjoy!
 
