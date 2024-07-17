@@ -1,7 +1,7 @@
 # VidTube-Web app (Server)
 <img src="/Web-app-Screenshots/logo_vidtube.png" alt="Logo" width="300">
 
-NOTE: this branch is for the web app, see branch 'main-part3' for the Android app, this is because there are different database intialization scripts for Web and Android (so make sure to dump database before starting the Abdroid database intialization script).
+NOTE: this branch is for the web app, see branch 'main-part3' for the Android app, this is because there are different database intialization scripts for Web and Android (so make sure to dump database before starting the Android database intialization script) for your convenience, you can use the script in the branch "main-part3", it works both for Web AND Android.
 
 The VidTube app is a video sharing app, made for allowing users across the world to upload and share their video content, comment their thoughts and interact with each other.
 This Readme file contains an overview of the web app and its features, along with the server and a guide on how to run it on your machine.
@@ -25,13 +25,15 @@ In the project directory go to the "config" folder (its in the main project dire
 it should look something like this:
 
 `CONNECTION_STRING=mongodb://localhost:27017/vidtube` (change to the connection string of your MongoDB)
-<br>`PORT=12345` (NOTE: you must use 12345 for it to work, sorry for the inconvenience)
+<br>`PORT=12345` (NOTE: you must use 12345 for it to work)
 <br>there is also `JWT_SECRET=your_secret_key` (you can ignore this)
 
 
 * Open MongoDB on your computer.
 
 ### insertData.js script
+NOTE: this script works for Web only, you can use the script in branch "main-part3" instead, as it works for both Web AND Android.
+
 * Included in the project is a script called "insertData.js" which will initialize the database with users, videos and comments. we highly reccomend you run this script in order to get the best experience and see all the features (and also to save you some time (: )
 
 * You can run the script by typing `node insertData.js` wait for the script to finish and your database should be initialized with videos, users and comments, hooray!
