@@ -1,16 +1,19 @@
 # VidTube-Web app (Server)
 <img src="/Web-app-Screenshots/logo_vidtube.png" alt="Logo" width="300">
+NOTE: This is the server for part 3 of the project, meaning that it works with the Android app and the Web app aswell.
 
 The VidTube app is a video sharing app, made for allowing users across the world to upload and share their video content, comment their thoughts and interact with each other.
 This Readme file contains an overview of the web app and its features, along with the server and a guide on how to run it on your machine.
 
 ## How To Run
-In order to run the Web app, start by cloning the repository to your IDE of choice, you can do this by opening the terminal and entering this command:
+Start by cloning the repository to your IDE of choice, you can do this by opening the terminal and entering this command:
 `git clone https://github.com/OCDev1/VidTube-server.git`
 
 Or download the repository to your computer.
 
 If you downloaded the repo-change the directory in your terminal to the downloaded repo directory. (if you cloned to your IDE then ignore this)
+
+Make sure your'e on branch `main-part3`.
 
 While in the project directory run:
 ### `npm install`
@@ -40,9 +43,15 @@ Now you can run
 
 ### `npm start`
 
-And open http://localhost:12345 (replace "12345" with the actual port number you chose in the .env.local file) to view it in your browser.
+In order to run the Android app, start by cloning the repository to Android Studio, you can do this by opening the terminal and entering this command:
+`git clone https://github.com/eyalg43/project_android.git`, and move to branch `mainPart3`.
 
-Now you are all set up, enjoy!
+After cloning the repository, open the project in Android Studio.
+(Note: if you are using a physical device, make sure to change the code, such that in every place it says "10.0.2.2" change it to your IP address)
+
+In order to run the web app open http://localhost:12345 (replace "12345" with the actual port number you chose in the .env.local file) to view it in your browser.
+
+Now you are all set up, enjoy both the Android app and the Web app!
 
 NOTE: you dont need to add the build from the frontend directory, but if you do, make sure not to delete any of the photos and videos in the "public" folder in this project, or else the insertData.js script wont be able to add it's data.
 
@@ -52,8 +61,7 @@ Again, we started off by watching Hemi's videos in the moodle, they helped us un
 ## Web App Features:
 
 ### NEW!
-* You can now delete your account or edit your user details in your profile page, you can access it by clicking your name in the header on the top right of the screen.
-in this page you can also view, delete or edit (redirects to edit page) your videos!
+* You can now delete your account or edit your user details in your profile page.
 
 * in the watch video screen, clicking the uploaders image or name will take you to his profile page where you can see more videos that he uploaded.
 
@@ -103,6 +111,82 @@ in this page you can also view, delete or edit (redirects to edit page) your vid
     * Don't want to sign up? click the VidTube logo and you will be brought back to the Home page.
     * Make sure your password fits the criteria and that your password and verification password match, or else you wont be allowed to sign up.
 
+
+# 📷 Screenshots from the Android app:
+
+## Home Activity (and switching to dark mode):
+<img src="/Android-app-screenshots/Screenshot_1.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_2.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_3.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_4.png" alt="Example Image">
+
+## Log in Activity (and signing up):
+<img src="/Android-app-screenshots/Screenshot_5.png" alt="Example Image">
+
+## Sign-up Activity (and uploading image from camera):
+<img src="/Android-app-screenshots/Screenshot_6.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_7.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_8.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_9.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_10.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_11.png" alt="Example Image">
+
+## Watch-Video Activity:
+<img src="/Android-app-screenshots/Screenshot_37.png" alt="Example Image">
+
+## Watch-Video Activity (Like, Dislike, Comments-post, edit, delete, like, dislike):
+<img src="/Android-app-screenshots/Screenshot_19.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_20.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_21.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_22.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_23.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_24.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_25.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_26.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_27.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_28.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_30.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_29.png" alt="Example Image">
+
+## Watch-Video Activity - Dark Mode:
+<img src="/Android-app-screenshots/Screenshot_18.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_36.png" alt="Example Image">
+
+## Upload-Video Activity:
+<img src="/Android-app-screenshots/Screenshot_12.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_13.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_14.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_145.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_15.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_16.png" alt="Example Image">
+
+## Edit-Video Activity (and editing a video):
+<img src="/Android-app-screenshots/Screenshot_31.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_32.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_33.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_34.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_345.png" alt="Example Image">
+
+## Edit-Video Activity - Dark Mode:
+<img src="/Android-app-screenshots/Screenshot_35.png" alt="Example Image">
+
+## Edit-User Activity:
+<img src="/Android-app-screenshots/Screenshot_50.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_51.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_52.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_53.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_54.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_55.png" alt="Example Image">
+
+## User-Videos Activity:
+<img src="/Android-app-screenshots/Screenshot_60.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_61.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_62.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_63.png" alt="Example Image">
+
+## Swipe to refresh:
+<img src="/Android-app-screenshots/Screenshot_70.png" alt="Example Image">
+<img src="/Android-app-screenshots/Screenshot_71.png" alt="Example Image">
 
 # 📷 Screenshots from the Web app:
 
