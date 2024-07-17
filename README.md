@@ -46,7 +46,7 @@ And open http://localhost:12345 (again, note that you put 12345 as the port in .
 
 Now you are all set up, enjoy!
 
-NOTE: you dont need to add the build from the frontend directory, but if you do, make sure not to delete any of the photos and videos in the "public" folder in this project, or else the insertData.js script wont be able to add it's data.
+IMPORTANT NOTE: you dont need to add the build from the frontend project directory, but if you do, make sure not to delete any of the photos and videos in the "public" folder in this project, or else the insertData.js script wont be able to add it's data.
 
 ## Our work process:
 Again, we started off by watching Hemi's videos in the moodle, they helped us understand how the server should work with the client side we built on the first part of the project. Each member of the group was working on a different part of the server, Max worked on the videos part, Eyal worked on the users part, and Omri worked on the comments part. We then connected the server to work with the client side but before we did it, we modified the client side to work with, POST, GET and more methods in order for it to work with the server. Then after that worked we connected a Mongo database to work with the server.
