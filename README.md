@@ -26,7 +26,7 @@ it should look something like this:
 
 `CONNECTION_STRING=mongodb://localhost:27017/vidtube (change to the connection string of your MongoDB)
 PORT=12345 (NOTE: you must use 12345 for it to work, sorry for the inconvenience)`
-there is also `JWT_SECRET=your_secret_key` (you can ignore this)
+<br>there is also `JWT_SECRET=your_secret_key` (you can ignore this)
 
 
 * Open MongoDB on your computer.
