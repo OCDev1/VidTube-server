@@ -25,7 +25,7 @@ In the project directory go to the "config" folder (its in the main project dire
 it should look something like this:
 
 `CONNECTION_STRING=mongodb://localhost:27017/vidtube` (change to the connection string of your MongoDB)
-<br>PORT=12345 `(NOTE: you must use 12345 for it to work, sorry for the inconvenience)`
+<br>`PORT=12345` (NOTE: you must use 12345 for it to work, sorry for the inconvenience)
 <br>there is also `JWT_SECRET=your_secret_key` (you can ignore this)
 
 
