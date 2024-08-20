@@ -90,6 +90,14 @@ const getVideosByAuthor = async (id) => {
   }
 }
 
+const getVideosByIds = async (ids) => {
+  try {
+    return await Video.find({ _id: { $in: ids } });
+  } catch (error) {
+    throw error;
+  }
+};
+
 const updateVideo = async (id, title, description, img, video) => {
   try {
       const cur_video = await getVideoById(id);
@@ -171,4 +179,4 @@ async function dislikeVideo(videoId, userDisplayName) {
   }
 }
 
-module.exports = { createVideo, getVideos, getAllVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor, likeVideo, dislikeVideo, getUserVideoById };
+module.exports = { createVideo, getVideos, getAllVideos, getVideoById, updateVideo, deleteVideo , getVideosByAuthor, likeVideo, dislikeVideo, getUserVideoById, getVideosByIds };

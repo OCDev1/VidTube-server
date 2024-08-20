@@ -1,4 +1,5 @@
 const videoService = require('../services/video');
+const { sendMessageToCppServer } = require('../services/cppCommunication');
 
 const createVideo = async (req, res) => {
   const { title, description, author, username, authorImage, uploadTime } = req.body;
@@ -61,6 +62,32 @@ const updateVideo = async (req, res) => {
       res.status(500).json({ errors: [error.message] });
   }
 };
+const getRecommendations = async (req, res) => {
+    const { id } = req.params;
+    const { userId, videoId } = req.body;
+
+    try {
+        // Prepare the message to send to the C++ server
+        const message = `USER:${userId};VIDEO:${videoId};`;
+
+        // Fetch all videos from the database (or cache)
+        const allVideos = await videoService.getAllVideos();
+
+        // Extract only the video IDs
+        const videoIds = allVideos.map(video => video._id);
+
+        // Send the message and video IDs to the C++ server
+        const recommendedVideoIds = await sendMessageToCppServer(message, videoIds);
+
+        // Convert the list of recommended video IDs to actual video objects
+        const recommendedVideos = await videoService.getVideosByIds(recommendedVideoIds.split(';'));
+
+        res.json(recommendedVideos);
+    } catch (error) {
+        console.error('Error fetching recommendations:', error);
+        res.status(500).json({ errors: [error.message] });
+    }
+};
 
 const deleteVideo = async (req, res) => {
     const video = await videoService.deleteVideo(req.params.pid);
@@ -95,4 +122,4 @@ async function likeVideo(req, res) {
     }
   }
 
-module.exports = { createVideo, getVideos, getAllVideos, getVideo, updateVideo, deleteVideo, getVideosByAuthor, likeVideo ,dislikeVideo, getUserVideoById };
+module.exports = { createVideo, getVideos, getAllVideos, getVideo, updateVideo, deleteVideo, getVideosByAuthor, likeVideo ,dislikeVideo, getUserVideoById, getRecommendations };
