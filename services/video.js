@@ -92,11 +92,19 @@ const getVideosByAuthor = async (id) => {
 
 const getVideosByIds = async (ids) => {
   try {
-    return await Video.find({ _id: { $in: ids } });
+    const videos = [];
+    for (const id of ids) {
+      const video = await getVideoById(id);
+      if (video) {
+        videos.push(video);
+      }
+    }
+    return videos;
   } catch (error) {
     throw error;
   }
 };
+
 
 const updateVideo = async (id, title, description, img, video) => {
   try {
