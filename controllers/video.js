@@ -63,61 +63,65 @@ const updateVideo = async (req, res) => {
   }
 };
 const getRecommendations = async (req, res) => {
-  const { id } = req.params;
-  const { userId, videoId } = req.body;
-
-  try {
-      // Prepare the message to send to the C++ server
-      const message = `USER:${userId};VIDEO:${videoId};`;
-
-      // Fetch all videos from the database (or cache)
-      const allVideos = await videoService.getAllVideos();
-
-      // Extract only the video IDs
-      const videoIds = allVideos.map(video => video._id);
-
-      // Send the message and video IDs to the C++ server
-      const recommendedVideoIds = await sendMessageToCppServer(message, videoIds);
-
-      // Convert the list of recommended video IDs to actual video objects
-      let recommendedVideos = await videoService.getVideosByIds(recommendedVideoIds.split(';'));
-
-      // Convert view counts to integers for comparison
-      recommendedVideos.forEach(video => {
-          const viewsStr = video.views;
-          let viewsInt;
-
-          if (viewsStr.endsWith('K')) {
-              viewsInt = parseFloat(viewsStr.replace('K', '')) * 1000;
-          } else if (viewsStr.endsWith('M')) {
-              viewsInt = parseFloat(viewsStr.replace('M', '')) * 1000000;
-          } else {
-              viewsInt = parseFloat(viewsStr.replace(/\D/g, ''));
-          }
-
-          video.viewsInt = viewsInt; // Add a temporary property for integer views
-      });
-
-       // Remove videos with the least views to keep only 6 videos
-      while (recommendedVideos.length > 6) {
-        let minIndex = 0;
-        recommendedVideos.forEach((video, index) => {
-            if (video.viewsInt < recommendedVideos[minIndex].viewsInt) {
-                minIndex = index;
+    const { id } = req.params;
+    const { userId, videoId } = req.body;
+  
+    try {
+        // Prepare the message to send to the C++ server
+        const message = `USER:${userId};VIDEO:${videoId};`;
+  
+        // Fetch all videos from the database (or cache)
+        const allVideos = await videoService.getAllVideos();
+  
+        // Extract only the video IDs
+        const videoIds = allVideos.map(video => video._id.toString());
+  
+        // Send the message and video IDs to the C++ server
+        const recommendedVideoIds = await sendMessageToCppServer(message, videoIds);
+  
+        // Filter out invalid or non-existing video IDs before querying the database
+        const validVideoIds = recommendedVideoIds.split(';').filter(id => videoIds.includes(id));
+  
+        // Convert the list of valid recommended video IDs to actual video objects
+        let recommendedVideos = await videoService.getVideosByIds(validVideoIds);
+  
+        // Convert view counts to integers for comparison
+        recommendedVideos.forEach(video => {
+            const viewsStr = video.views;
+            let viewsInt;
+  
+            if (viewsStr.endsWith('K')) {
+                viewsInt = parseFloat(viewsStr.replace('K', '')) * 1000;
+            } else if (viewsStr.endsWith('M')) {
+                viewsInt = parseFloat(viewsStr.replace('M', '')) * 1000000;
+            } else {
+                viewsInt = parseFloat(viewsStr.replace(/\D/g, ''));
             }
+  
+            video.viewsInt = viewsInt; // Add a temporary property for integer views
         });
-        recommendedVideos.splice(minIndex, 1); // Remove the video with the least views
-      }
-      
-      // Clean up the temporary viewsInt property
-      recommendedVideos.forEach(video => delete video.viewsInt);
-
-      res.json(recommendedVideos);
-  } catch (error) {
-      console.error('Error fetching recommendations:', error);
-      res.status(500).json({ errors: [error.message] });
-  }
-};
+  
+        // Remove videos with the least views to keep only 6 videos
+        while (recommendedVideos.length > 6) {
+          let minIndex = 0;
+          recommendedVideos.forEach((video, index) => {
+              if (video.viewsInt < recommendedVideos[minIndex].viewsInt) {
+                  minIndex = index;
+              }
+          });
+          recommendedVideos.splice(minIndex, 1); // Remove the video with the least views
+        }
+        
+        // Clean up the temporary viewsInt property
+        recommendedVideos.forEach(video => delete video.viewsInt);
+  
+        res.json(recommendedVideos);
+    } catch (error) {
+        console.error('Error fetching recommendations:', error);
+        res.status(500).json({ errors: [error.message] });
+    }
+  };
+  
 
 
 const deleteVideo = async (req, res) => {
