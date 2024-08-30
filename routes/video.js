@@ -33,7 +33,8 @@ router.route('/allvideos')
   .get(videoController.getAllVideos);
 
 router.route('/videos/:id')
-  .get(videoController.getVideo);
+  .get(videoController.getVideo)
+  .post(videoController.getRecommendations);
 
 router.route('/users/:id/videos')
   .get(videoController.getVideosByAuthor)
