@@ -1,6 +1,6 @@
 # VidTube-Web app (Server)
 <img src="/Web-app-Screenshots/logo_vidtube.png" alt="Logo" width="300">
-NOTE: This is the server for part 3 of the project, meaning that it works with the Android app and the Web app aswell.
+NOTE: This is the server for *part 4* of the project, meaning that it works with the Android app *and* the Web app aswell.
 
 The VidTube app is a video sharing app, made for allowing users across the world to upload and share their video content, comment their thoughts and interact with each other.
 This Readme file contains an overview of the web app and its features, along with the server and a guide on how to run it on your machine.
@@ -26,7 +26,7 @@ In the project directory go to the "config" folder (its in the main project dire
 it should look something like this:
 
 `CONNECTION_STRING=mongodb://localhost:27017/vidtube (change to the connection string of your MongoDB)
-PORT=12345 (change to the port you would like to run on)`
+PORT=12345 (NOTE: you must use 12345 for it to work)`
 there is also `JWT_SECRET=your_secret_key` (you can ignore this)
 
 
